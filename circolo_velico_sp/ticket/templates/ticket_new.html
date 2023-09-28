@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% csrf_token %}
+  <h2>Nuovo Ticket</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-success">Salva</button>
+    <a href="{% url 'ticket_list' %}" class="btn btn-secondary">Annulla</a>
+  </form>
+{% endblock %}

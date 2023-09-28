@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+{% csrf_token %}
+  <h1>Barche</h1>
+  <p>Aggiungi uscita: <a href="{% url 'b_uscita_new' %}" class="btn btn-primary">Aggiungi</a><p>
+  <h3>Uscite</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Barca</th>
+        <th>Persona</th>
+        <th>Data</th>
+        <th>Rientrato</th>
+        <th>Non socio non accompagnato</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in uscite %}
+        <tr>
+          <td>{{ u.barca }}</td>
+          <td>{{ u.persona }}</td>
+          <td>{{ u.data }}</td>
+          <td>{{ u.rientrato }}</td>
+          <td>{{ u.non_socio }}</td>
+          <td>
+            <a href="{% url 'b_uscita_edit' u.pk %}" class="btn btn-primary">Modifica</a>
+            <a href="{% url 'b_uscita_delete' u.pk %}" class="btn btn-danger">Elimina</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">Nessuna uscita trovata.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

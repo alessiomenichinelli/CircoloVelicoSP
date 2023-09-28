@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+  <h2>Elimina Uscita</h2>
+  <p>Sei sicuro di voler eliminare questa uscita?</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <tr>
+          <th>Barca</th>
+          <th>Persona</th>
+          <th>Data</th>
+          <th>Rientrato</th>
+          <th>Non socio non accompagnato</th>
+        </tr>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>{{ u.barca }}</td>
+          <td>{{ u.persona }}</td>
+          <td>{{ u.data }}</td>
+          <td>{{ u.rientrato }}</td>
+          <td>{{ u.non_socio }}</td>
+        </tr>
+    </tbody>
+  </table>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Elimina</button>
+    <a href="{% url 'b_index' %}" class="btn btn-secondary">Annulla</a>
+  </form>
+{% endblock %}

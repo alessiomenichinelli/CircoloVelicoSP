@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% csrf_token %}
+  <h1>Tickets</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Testo</th>
+        <th>Stato</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in tickets %}
+        <tr>
+          <td>{{ t.user }}</td>
+          <td>{{ t.testo }}</td>
+          <td>{{ t.stato }}</td>
+          <td>
+            <a href="{% url 'ticket_edit' t.pk %}" class="btn btn-primary">Modifica</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Nessun ticket trovato.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
