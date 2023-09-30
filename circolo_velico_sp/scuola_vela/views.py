@@ -26,7 +26,8 @@ def uscita_new(request):
             form = UscitaIstruttoreForm(request.user, request.POST)
             if form.is_valid():
                 uscita = form.save(commit=False)
-                uscita.user = request.user
+                istruttore_associato = Istruttore.objects.get(user=request.user)
+                uscita.istruttore = istruttore_associato
                 uscita.save()
                 form.save_m2m()
                 return redirect('sv_index')

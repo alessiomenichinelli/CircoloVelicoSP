@@ -3,6 +3,8 @@ from django import forms
 from .models import Barca, Proprietario, Uscita
 
 class UscitaForm(forms.ModelForm):
+    barca = forms.ModelChoiceField(queryset=Barca.objects.none(), empty_label=None)
+    persona = forms.ModelChoiceField(queryset=Proprietario.objects.none(), empty_label=None)
     data = forms.DateField(
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
@@ -17,3 +19,9 @@ class UscitaForm(forms.ModelForm):
     class Meta():
         model = Uscita
         fields = ('barca', 'persona', 'data', 'rientrato', 'non_socio', 'note')
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["barca"].queryset = Barca.objects.all().order_by('nome')
+        self.fields["persona"].queryset = Proprietario.objects.all().order_by('nome')

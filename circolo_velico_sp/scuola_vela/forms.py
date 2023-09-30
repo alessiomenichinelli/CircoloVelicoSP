@@ -2,8 +2,7 @@ from django import forms
 from .models import Istruttore, Gommone, Allievo, Uscita
 
 class UscitaIstruttoreForm(forms.ModelForm):
-    istruttore = forms.ModelChoiceField(queryset=Istruttore.objects.none(), empty_label=None)
-    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all(), widget=forms.CheckboxSelectMultiple())
+    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all().order_by('nome'), widget=forms.CheckboxSelectMultiple())
     data = forms.DateField(
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
@@ -27,14 +26,13 @@ class UscitaIstruttoreForm(forms.ModelForm):
 
     class Meta:
         model = Uscita
-        fields = ('istruttore', 'gommone', 'allievi', 'data', 'ora_uscita', 'ora_rientro')
+        fields = ('gommone', 'allievi', 'data', 'ora_uscita', 'ora_rientro')
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['istruttore'].queryset = Istruttore.objects.filter(user=user)
 
 class UscitaAmministratoreForm(forms.ModelForm):
-    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all(), widget=forms.CheckboxSelectMultiple())
+    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all().order_by('nome'), widget=forms.CheckboxSelectMultiple())
     data = forms.DateField(
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
