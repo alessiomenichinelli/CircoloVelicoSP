@@ -28,5 +28,6 @@ class Uscita(models.Model):
     data = models.DateField()
     rientrato = models.BooleanField()
     non_socio = models.BooleanField()
+    note = models.CharField(max_length=1000, null=True, blank=True)
 
     

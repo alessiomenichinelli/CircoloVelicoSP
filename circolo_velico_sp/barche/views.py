@@ -61,4 +61,4 @@ def uscita_delete(request, pk):
             uscita.delete()
             return redirect('b_index')
         else:
-            return render(request, 'uscita_delete.html', {'uscita':uscita})
+            return render(request, 'uscita_delete.html', {'u':uscita})

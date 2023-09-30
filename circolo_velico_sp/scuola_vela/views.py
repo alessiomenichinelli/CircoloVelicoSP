@@ -13,10 +13,10 @@ def sv_index(request):
     if is_istruttore(request.user):
         istruttore_associato = Istruttore.objects.get(user=request.user)
         data_attuale = timezone.now().date()
-        uscite = Uscita.objects.filter(istruttore=istruttore_associato, data=data_attuale)
+        uscite = Uscita.objects.filter(istruttore=istruttore_associato, data=data_attuale).order_by('-data')
         return render(request, 'sv_index.html', {'uscite': uscite})
     else:
-        uscite = Uscita.objects.all()
+        uscite = Uscita.objects.all().order_by('-data')
         return render(request, 'sv_index.html', {'uscite': uscite})
 
 @login_required

@@ -4,7 +4,16 @@ from .models import Istruttore, Gommone, Allievo, Uscita
 class UscitaIstruttoreForm(forms.ModelForm):
     istruttore = forms.ModelChoiceField(queryset=Istruttore.objects.none(), empty_label=None)
     allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all(), widget=forms.CheckboxSelectMultiple())
-    data = forms.DateField(widget=forms.SelectDateWidget)  # Usa il widget di tipo data
+    data = forms.DateField(
+        widget=forms.DateInput(
+            format=('%Y-%m-%d'),
+            attrs={
+                'class': 'form-control', 
+                'placeholder': 'Select a date',
+                'type': 'date'
+            }
+        ),
+    )
     ora_rientro = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
     ora_uscita = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
 
@@ -26,7 +35,16 @@ class UscitaIstruttoreForm(forms.ModelForm):
 
 class UscitaAmministratoreForm(forms.ModelForm):
     allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all(), widget=forms.CheckboxSelectMultiple())
-    data = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))  # Usa il widget di tipo data
+    data = forms.DateField(
+        widget=forms.DateInput(
+            format=('%Y-%m-%d'),
+            attrs={
+                'class': 'form-control', 
+                'placeholder': 'Select a date',
+                'type': 'date'
+            }
+        ),
+    )
     ora_rientro = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
     ora_uscita = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
 

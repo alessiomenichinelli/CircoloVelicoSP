@@ -13,16 +13,30 @@
           <th>Data</th>
           <th>Rientrato</th>
           <th>Non socio non accompagnato</th>
+          <th>Note</th>
         </tr>
       </tr>
     </thead>
     <tbody>
         <tr>
-          <td>{{ u.barca }}</td>
-          <td>{{ u.persona }}</td>
-          <td>{{ u.data }}</td>
-          <td>{{ u.rientrato }}</td>
-          <td>{{ u.non_socio }}</td>
+          <td class="text-center">{{ u.barca }}</td>
+          <td class="text-center">{{ u.persona }}</td>
+          <td class="text-center">{{ u.data }}</td>
+          {% if u.rientrato %}
+          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
+          {% else %}
+          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
+          {% endif %}
+          {% if u.non_socio %}
+          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
+          {% else %}
+          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
+          {% endif %}
+          {% if u.note %}
+          <td>{{ u.note }} </td>
+          {% else %}
+          <td></td>
+          {% endif %}
         </tr>
     </tbody>
   </table>

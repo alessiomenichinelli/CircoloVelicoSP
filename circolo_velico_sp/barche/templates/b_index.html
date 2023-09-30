@@ -7,22 +7,36 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Barca</th>
-        <th>Persona</th>
-        <th>Data</th>
-        <th>Rientrato</th>
-        <th>Non socio non accompagnato</th>
+        <th class="text-center">Barca</th>
+        <th class="text-center">Persona</th>
+        <th class="text-center">Data</th>
+        <th class="text-center">Rientrato</th>
+        <th class="text-center">Non socio non accompagnato</th>
+        <th class="text-center">Note</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       {% for u in uscite %}
         <tr>
-          <td>{{ u.barca }}</td>
-          <td>{{ u.persona }}</td>
-          <td>{{ u.data }}</td>
-          <td>{{ u.rientrato }}</td>
-          <td>{{ u.non_socio }}</td>
+          <td class="text-center">{{ u.barca }}</td>
+          <td class="text-center">{{ u.persona }}</td>
+          <td class="text-center">{{ u.data }}</td>
+          {% if u.rientrato %}
+          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
+          {% else %}
+          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
+          {% endif %}
+          {% if u.non_socio %}
+          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
+          {% else %}
+          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
+          {% endif %}
+          {% if u.note %}
+          <td>{{ u.note }} </td>
+          {% else %}
+          <td></td>
+          {% endif %}
           <td>
             <a href="{% url 'b_uscita_edit' u.pk %}" class="btn btn-primary">Modifica</a>
             <a href="{% url 'b_uscita_delete' u.pk %}" class="btn btn-danger">Elimina</a>
