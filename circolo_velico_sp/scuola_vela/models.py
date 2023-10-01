@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+OL_CHOICHES = [
+    ('optimist', 'Optimist'),
+    ('laser', 'Laser')
+]
+
 class Istruttore(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
@@ -20,6 +25,7 @@ class Gommone(models.Model):
 
 class Allievo(models.Model):
     nome = models.CharField(max_length=100)
+    ol = models.CharField(max_length=100, choices=OL_CHOICHES, default='optimist')
 
     def __str__(self):
         string = self.nome
@@ -33,4 +39,5 @@ class Uscita(models.Model):
     data = models.DateField()
     ora_uscita = models.TimeField()
     ora_rientro = models.TimeField()
+    ol = models.CharField(max_length=100, choices=OL_CHOICHES, default='optimist')
     

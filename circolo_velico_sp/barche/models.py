@@ -26,6 +26,7 @@ class Uscita(models.Model):
     barca = models.ForeignKey(Barca, on_delete=models.CASCADE)
     persona = models.ForeignKey(Proprietario, on_delete=models.CASCADE)
     data = models.DateField()
+    tm = models.CharField(max_length=100, choices=TM_CHOICHES, default='terra')
     rientrato = models.BooleanField()
     non_socio = models.BooleanField()
     note = models.CharField(max_length=1000, null=True, blank=True)

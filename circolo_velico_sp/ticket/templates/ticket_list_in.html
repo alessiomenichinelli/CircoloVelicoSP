@@ -2,31 +2,55 @@
 {% block content %}
 {% csrf_token %}
   <h1>Tickets</h1>
-  <button class="btn btn-primary"><a href="{% url 'ticket_new' %}" class="btn btn-primary">Entra</a></button>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Testo</th>
-        <th>Stato</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for t in tickets %}
-        <tr>
-          <td>{{ t.user }}</td>
-          <td>{{ t.testo }}</td>
-          <td>{{ t.stato }}</td>
-          <td>
-            <a href="{% url 'ticket_delete' t.pk %}" class="btn btn-danger">Elimina</a>
-          </td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="4">Nessun ticket trovato.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class='col'>
+    <div class='row justify-content-center p-4'>
+      <div class='card'>
+        <h6 class ='card-header'>
+          Aggiungi Ticket:
+        </h6>
+        <div class='card-body'>
+          <div class='row align-items-center justify-content-center'>
+            <div class ='p-3'>
+              <a href="{% url 'ticket_new' %}" class="btn btn-info">Nuovo Ticket</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class='row justify-content-center p-4'>
+    <div class="card">
+      <h4 class="card-header">
+        Tickets modificabili
+      </h4>
+      <div class='card-body'>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Testo</th>
+              <th>Stato</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in tickets %}
+              <tr>
+                <td>{{ t.user }}</td>
+                <td>{{ t.testo }}</td>
+                <td>{{ t.stato }}</td>
+                <td>
+                  <a href="{% url 'ticket_delete' t.pk %}" class="btn btn-danger">Elimina</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4">Nessun ticket trovato.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

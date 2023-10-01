@@ -2,12 +2,44 @@
 {% load bootstrap4 %}
 {% block content %}
 {% csrf_token %}
-<h3>Scuola di vela</h3>
-<button class="btn btn-primary"><a href="{% url 'sv_index' %}" class="btn btn-primary">Entra</a></button>
-{% if not istruttore %}
-<h3>Barche</h3>
-<button class="btn btn-primary"><a href="{% url 'b_index' %}" class="btn btn-primary">Entra</a></button>
-{% endif %}
-<h3>Tickets</h3>
-<button class="btn btn-primary"><a href="{% url 'ticket_list' %}" class="btn btn-primary">Entra</a></button>
+<div class='col'>
+    <div class='row justify-content-center p-2'>
+      <div class="card">
+        <h2 class="card-header">
+          Scuola di vela
+        </h2>
+        <div class='card-body'>
+            <div class='row justify-content-center p-2'>
+                <a href="{% url 'sv_index' %}" class="btn btn-primary">Entra</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    {% if not istruttore %}
+    <div class='row justify-content-center p-2'>
+      <div class="card">
+        <h2 class="card-header">
+          Barche
+        </h2>
+        <div class='card-body'>
+            <div class='row justify-content-center p-2'>
+                <a href="{% url 'b_index' %}" class="btn btn-primary">Entra</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class='row justify-content-center p-2'>
+      <div class="card">
+        <h2 class="card-header">
+          Tickets
+        </h2>
+        <div class='card-body'>
+            <div class='row justify-content-center p-2'>
+                <a href="{% url 'ticket_list' %}" class="btn btn-primary">Entra</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -23,8 +23,10 @@ def ticket_list(request):
         tickets = Ticket.objects.filter(user=request.user)
         return render(request, 'ticket_list_in.html', {'tickets': tickets})
     else:
-        tickets = Ticket.objects.all()
-        return render(request, 'ticket_list_a.html', {'tickets': tickets})
+        tickets_a = Ticket.objects.all()
+        tickets_r = Ticket.objects.filter(stato='Risolto')
+        tickets = tickets_r ^ tickets_a
+        return render(request, 'ticket_list_a.html', {'tickets': tickets, 'tickets_r': tickets_r})
 
 @login_required
 def ticket_new(request):
@@ -66,7 +68,7 @@ def ticket_delete(request, pk):
     if not is_istruttore(request.user) and not is_nostromo(request.user):
         raise Http404
     else:
-        ticket = get_object_or_404(ticket, pk=pk, user=request.user)
+        ticket = get_object_or_404(Ticket, pk=pk, user=request.user)
         if request.method == "POST":
             ticket.delete()
             return redirect('ticket_list')

@@ -21,7 +21,7 @@ class UscitaForm(forms.ModelForm):
         fields = ('barca', 'persona', 'data', 'rientrato', 'non_socio', 'note')
 
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, tm, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["barca"].queryset = Barca.objects.all().order_by('nome')
+        self.fields["barca"].queryset = Barca.objects.filter(tm=tm).order_by('nome')
         self.fields["persona"].queryset = Proprietario.objects.all().order_by('nome')

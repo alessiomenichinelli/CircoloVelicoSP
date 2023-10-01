@@ -2,7 +2,7 @@ from django import forms
 from .models import Istruttore, Gommone, Allievo, Uscita
 
 class UscitaIstruttoreForm(forms.ModelForm):
-    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all().order_by('nome'), widget=forms.CheckboxSelectMultiple())
+    allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.none(), widget=forms.CheckboxSelectMultiple())
     data = forms.DateField(
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
@@ -28,8 +28,9 @@ class UscitaIstruttoreForm(forms.ModelForm):
         model = Uscita
         fields = ('gommone', 'allievi', 'data', 'ora_uscita', 'ora_rientro')
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, user, ol,*args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["allievi"].queryset = Allievo.objects.filter(ol=ol).order_by('nome')
 
 class UscitaAmministratoreForm(forms.ModelForm):
     allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.all().order_by('nome'), widget=forms.CheckboxSelectMultiple())
@@ -58,5 +59,6 @@ class UscitaAmministratoreForm(forms.ModelForm):
         model = Uscita
         fields = ('istruttore', 'gommone', 'allievi', 'data', 'ora_uscita', 'ora_rientro')
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, user, ol, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["allievi"].queryset = Allievo.objects.filter(ol=ol).order_by('nome')

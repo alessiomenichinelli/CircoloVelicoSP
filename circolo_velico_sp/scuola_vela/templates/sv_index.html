@@ -3,37 +3,65 @@
 {% block content %}
 {% csrf_token %}
   <h1>Scuola di vela</h1>
-  <p>Aggiungi uscita: <a href="{% url 'sv_uscita_new' %}" class="btn btn-primary">Aggiungi</a><p>
-  <h3>Uscite modificabili</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Istruttore</th>
-        <th>Gommone</th>
-        <th>Data</th>
-        <th>Uscita</th>
-        <th>Entrata</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for u in uscite %}
-        <tr>
-          <td>{{ u.istruttore }}</td>
-          <td>{{ u.gommone }}</td>
-          <td>{{ u.data }}</td>
-          <td>{{ u.ora_uscita }}</td>
-          <td>{{ u.ora_rientro }}</td>
-          <td>
-            <a href="{% url 'sv_uscita_edit' u.pk %}" class="btn btn-primary">Modifica</a>
-            <a href="{% url 'sv_uscita_delete' u.pk %}" class="btn btn-danger">Elimina</a>
-          </td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="6">Nessuna uscita trovata.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class='col'>
+    <div class='row justify-content-center p-4'>
+      <div class='card'>
+        <h6 class ='card-header'>
+          Aggiungi uscita:
+        </h6>
+        <div class='card-body'>
+          <div class='row align-items-center justify-content-center'>
+            <div class ='p-3'>
+              <a href="{% url 'sv_uscita_new' 'optimist' %}" class="btn btn-info">Optimist</a>
+            </div>
+            <div class ='p-3'>
+              <a href="{% url 'sv_uscita_new' 'laser' %}" class="btn btn-success">Laser</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row justify-content-center p-4'>
+      <div class="card">
+        <h4 class="card-header">
+          Uscite modificabili
+        </h4>
+        <div class='card-body'>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Istruttore</th>
+                <th>Gommone</th>
+                <th>Data</th>
+                <th>Uscita</th>
+                <th>Entrata</th>
+                <th>Optimist/Laser</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in uscite %}
+                <tr>
+                  <td>{{ u.istruttore }}</td>
+                  <td>{{ u.gommone }}</td>
+                  <td>{{ u.data }}</td>
+                  <td>{{ u.ora_uscita }}</td>
+                  <td>{{ u.ora_rientro }}</td>
+                  <td>{{ u.ol }}</td>
+                  <td>
+                    <a href="{% url 'sv_uscita_edit' u.pk %}" class="btn btn-primary">Modifica</a>
+                    <a href="{% url 'sv_uscita_delete' u.pk %}" class="btn btn-danger">Elimina</a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="6">Nessuna uscita trovata.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

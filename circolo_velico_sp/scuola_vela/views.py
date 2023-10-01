@@ -20,31 +20,32 @@ def sv_index(request):
         return render(request, 'sv_index.html', {'uscite': uscite})
 
 @login_required
-def uscita_new(request):
+def uscita_new(request, ol):
     if is_istruttore(request.user):
         if request.method == "POST":
-            form = UscitaIstruttoreForm(request.user, request.POST)
+            form = UscitaIstruttoreForm(request.user, ol, request.POST)
             if form.is_valid():
                 uscita = form.save(commit=False)
                 istruttore_associato = Istruttore.objects.get(user=request.user)
                 uscita.istruttore = istruttore_associato
+                uscita.ol = ol
                 uscita.save()
                 form.save_m2m()
                 return redirect('sv_index')
         else:
-            form = UscitaIstruttoreForm(request.user)
+            form = UscitaIstruttoreForm(request.user, ol)
         return render(request, 'sv_uscita_new.html', {'form': form})
     else:
         if request.method == "POST":
-            form = UscitaAmministratoreForm(request.user, request.POST)
+            form = UscitaAmministratoreForm(request.user, ol, request.POST)
             if form.is_valid():
                 uscita = form.save(commit=False)
-                uscita.user = request.user
+                uscita.ol = ol
                 uscita.save()
                 form.save_m2m()
                 return redirect('sv_index')
         else:
-            form = UscitaAmministratoreForm(request.user)
+            form = UscitaAmministratoreForm(request.user, ol)
         return render(request, 'sv_uscita_new.html', {'form': form})
 
 @login_required
@@ -54,7 +55,7 @@ def uscita_edit(request, pk):
         data_attuale = timezone.now().date()
         uscita = get_object_or_404(Uscita, pk=pk, istruttore=istruttore_associato, data=data_attuale)
         if request.method == "POST":
-            form = UscitaIstruttoreForm(request.user, request.POST, instance=uscita)
+            form = UscitaIstruttoreForm(request.user, uscita.ol,request.POST, instance=uscita)
             if form.is_valid():
                 uscita = form.save(commit=False)
                 uscita.user = request.user
@@ -62,12 +63,12 @@ def uscita_edit(request, pk):
                 form.save_m2m()
                 return redirect('sv_index')
         else:
-            form = UscitaAmministratoreForm(request.user, instance=uscita)
+            form = UscitaAmministratoreForm(request.user, uscita.ol, instance=uscita)
         return render(request, 'sv_uscita_edit.html', {'form': form})
     else:
         uscita = get_object_or_404(Uscita, pk=pk)
         if request.method == "POST":
-            form = UscitaAmministratoreForm(request.user, request.POST, instance=uscita)
+            form = UscitaAmministratoreForm(request.user, uscita.ol, request.POST, instance=uscita)
             if form.is_valid():
                 uscita = form.save(commit=False)
                 uscita.user = request.user
@@ -75,7 +76,7 @@ def uscita_edit(request, pk):
                 form.save_m2m()
                 return redirect('sv_index')
         else:
-            form = UscitaAmministratoreForm(request.user, instance=uscita)
+            form = UscitaAmministratoreForm(request.user, uscita.ol, instance=uscita)
         return render(request, 'sv_uscita_edit.html', {'form': form})
 
 @login_required
