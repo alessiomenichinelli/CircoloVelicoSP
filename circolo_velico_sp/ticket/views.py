@@ -14,15 +14,19 @@ def is_istruttore(user):
 def is_nostromo(user):
     return user.groups.filter(name='Nostromo').exists()
 
+def is_ds(user):
+    return user.groups.filter(name='DS').exists()
+
 @login_required
 def index(request):
     istruttore = is_istruttore(request.user)
     nostromo = is_nostromo(request.user)
-    return render(request, 'index.html', {'istruttore': istruttore, 'nostromo': nostromo})
+    ds = is_ds(request.user)
+    return render(request, 'index.html', {'istruttore': istruttore, 'nostromo': nostromo, 'ds': ds})
 
 @login_required
 def ticket_list(request):
-    if is_istruttore(request.user) or is_nostromo(request.user):
+    if is_istruttore(request.user) or is_nostromo(request.user) or is_ds(request.user):
         tickets = Ticket.objects.filter(user=request.user)
         return render(request, 'ticket_list_in.html', {'tickets': tickets})
     else:
@@ -33,7 +37,7 @@ def ticket_list(request):
 
 @login_required
 def ticket_new(request):
-    if not is_istruttore(request.user) and not is_nostromo(request.user):
+    if not is_istruttore(request.user) and not is_nostromo(request.user) and not is_ds(request.user):
         raise Http404
     else:
         bot = telebot.TeleBot(API_TOKEN)
@@ -53,7 +57,7 @@ def ticket_new(request):
 
 @login_required
 def ticket_edit(request, pk):
-    if is_istruttore(request.user) or is_nostromo(request.user):
+    if is_istruttore(request.user) or is_nostromo(request.user) or is_ds(request.user):
         raise Http404
     else:
         ticket = get_object_or_404(Ticket, pk=pk)
@@ -70,7 +74,7 @@ def ticket_edit(request, pk):
 
 @login_required
 def ticket_delete(request, pk):
-    if not is_istruttore(request.user) and not is_nostromo(request.user):
+    if not is_istruttore(request.user) and not is_nostromo(request.user) and not is_ds(request.user):
         raise Http404
     else:
         ticket = get_object_or_404(Ticket, pk=pk, user=request.user)

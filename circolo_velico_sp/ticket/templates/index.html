@@ -1,45 +1,49 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-<div class='col'>
-    <div class='row justify-content-center p-2'>
-      <div class="card">
-        <h2 class="card-header">
-          Scuola di vela
-        </h2>
-        <div class='card-body'>
-            <div class='row justify-content-center p-2'>
-                <a href="{% url 'sv_index' %}" class="btn btn-primary">Entra</a>
-            </div>
+<div class="container-fluid h100">
+  <div class="row align-items-center" style="height: 100%;">
+    <div>
+      <div class="row mb-5 justify-content-center">
+        <div class="card p-0"  style="width: 400px;">
+          <div class="index-title card-header bg-dark-subtle text-white text-center">
+            <h1>Scuola di vela</h1>
+          </div>
+          <div class="card-body bg-tertiary">
+              <div class="row justify-content-center p-3">
+                  <a href="{% url 'sv_index' %}" class="btn bg-primary">Entra</a>
+              </div>
+          </div>
         </div>
       </div>
-    </div>
-    {% if not istruttore %}
-    <div class='row justify-content-center p-2'>
-      <div class="card">
-        <h2 class="card-header">
-          Barche
-        </h2>
-        <div class='card-body'>
-            <div class='row justify-content-center p-2'>
-                <a href="{% url 'b_index' %}" class="btn btn-primary">Entra</a>
-            </div>
+      {% if not istruttore and not ds %}
+      <div class="row mb-5 justify-content-center">
+        <div class="card p-0"  style="width: 400px;">
+          <div class="index-title card-header bg-dark-subtle text-white text-center">
+            <h1>Barche</h1>
+          </div>
+          <div class="card-body bg-dark">
+              <div class="row justify-content-center p-3">
+                  <a href="{% url 'b_index' %}" class="btn bg-primary">Entra</a>
+              </div>
+          </div>
         </div>
       </div>
-    </div>
-    {% endif %}
-    <div class='row justify-content-center p-2'>
-      <div class="card">
-        <h2 class="card-header">
-          Tickets
-        </h2>
-        <div class='card-body'>
-            <div class='row justify-content-center p-2'>
-                <a href="{% url 'ticket_list' %}" class="btn btn-primary">Entra</a>
-            </div>
+      {% endif %}
+      <div class="row justify-content-center">
+        <div class="card p-0"  style="width: 400px;">
+          <div class="index-title card-header bg-dark-subtle text-white text-center">
+            <h1>Tickets</h1>
+          </div>
+          <div class="card-body bg-dark">
+              <div class="row justify-content-center p-3">
+                  <a href="{% url 'ticket_list' %}" class="btn bg-primary">Entra</a>
+              </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

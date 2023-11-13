@@ -1,0 +1,63 @@
+
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, .mainpage {
+    min-height: 100vh;
+}
+
+.mainpage {
+    display: flex;
+    flex-direction: column;
+}
+
+nav, main {
+    margin-left: 15rem;
+    margin-right: 15rem;
+}
+
+main {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    flex-grow: 1;
+}
+
+.hidth {
+    display:table-cell;
+}
+
+@media (max-width: 1400px){
+    nav, main {
+        margin-left: 10rem;
+        margin-right: 10rem;
+    }
+}
+
+@media (max-width: 1200px){
+    nav, main {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+}
+
+@media (max-width: 768px){
+    nav, main{
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .hidth {
+        display: none;
+    }
+}
+
+.index-title h1 {
+    margin-bottom: 0;
+    font-size: 2em;
+}
+
+/* SV index */
+

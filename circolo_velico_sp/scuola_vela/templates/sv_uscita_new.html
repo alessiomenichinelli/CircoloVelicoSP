@@ -1,12 +1,36 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-  <h2>Nuova uscita</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-success">Salva</button>
-    <a href="{% url 'sv_index' %}" class="btn btn-secondary">Annulla</a>
-  </form>
+<div class="col">
+  <div class="row mb-5 justify-content-center">
+    <div class="card p-0">
+      <div class="index-title card-header bg-dark-subtle text-white">
+        <div class="row align-items-center">
+            <div class="col-3 text-left" style="hight: min-content;">
+                <a href="{% url 'sv_index' %}">
+                    <span class="material-symbols-outlined" style="color: white;" title="Visualizza">arrow_back</span>
+                </a>
+            </div>
+            <div class="col-6 text-center">
+                <h1 class="d-inline-block">Nuova Uscita {% if data %} del {{data}} {% endif %}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-dark p-4">
+        <form class="col" method="post">
+          {% csrf_token %}
+          <div class="row">
+          {% bootstrap_form form %}
+          </div>
+          <div class="row pt-4 ms-1 me-1 justify-content-center">
+            <button type="submit" class="btn btn-success">Salva</button>
+            <a href="{% url 'sv_index' %}" class="btn btn-secondary mt-3">Annulla</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

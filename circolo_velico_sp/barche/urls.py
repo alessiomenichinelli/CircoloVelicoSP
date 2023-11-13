@@ -7,4 +7,5 @@ urlpatterns = [
     path('new/<str:tm>/', views.uscita_new, name='b_uscita_new'),
     path('edit/<int:pk>/', views.uscita_edit, name='b_uscita_edit'),
     path('delate/<int:pk>/', views.uscita_delete, name='b_uscita_delete'),
+    path('view/<int:pk>/', views.uscita_view, name='b_uscita_view'),
 ]

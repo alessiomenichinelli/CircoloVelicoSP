@@ -1,40 +1,36 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-  <h1>Barche</h1>
-  <div class='col'>
-    <div class='row justify-content-center p-4'>
-      <div class='card'>
-        <h6 class ='card-header'>
-          Aggiungi uscita:
-        </h6>
-        <div class='card-body'>
-          <div class='row align-items-center justify-content-center'>
-            <div class ='p-3'>
-              <a href="{% url 'b_uscita_new' 'mare' %}" class="btn btn-info">Mare</a>
-            </div>
-            <div class ='p-3'>
+  <div class="col">
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0"  style="width: 400px;">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Aggiungi Uscita</h1>
+        </div>
+        <div class="card-body bg-dark">
+          <div class="row align-items-center justify-content-center">
+            <div class ="p-3" style="width: fit-content;">
+              <a href="{% url 'b_uscita_new' 'mare' %}" class="btn btn-info me-4">Mare</a>
               <a href="{% url 'b_uscita_new' 'terra' %}" class="btn btn-success">Terra</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class='row justify-content-center p-4'>
-      <div class="card">
-        <h4 class="card-header">
-          Uscite mare di oggi
-        </h4>
-        <div class='card-body'>
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Uscite mare di oggi</h1>
+        </div>
+        <div class="card-body bg-dark p-4">
           <table class="table">
             <thead>
               <tr>
                 <th class="text-center">Barca</th>
-                <th class="text-center">Persona</th>
+                <th class="text-center hidth">Persona</th>
                 <th class="text-center">Data</th>
-                <th class="text-center">Rientrato</th>
-                <th class="text-center">Non socio non accompagnato</th>
-                <th class="text-center">Note</th>
+                <th class="text-center hidth">Rientrato</th>
                 <th></th>
               </tr>
             </thead>
@@ -42,26 +38,17 @@
               {% for u in uscite_m %}
                 <tr>
                   <td class="text-center">{{ u.barca }}</td>
-                  <td class="text-center">{{ u.persona }}</td>
+                  <td class="text-center hidth">{{ u.persona }}</td>
                   <td class="text-center">{{ u.data }}</td>
                   {% if u.rientrato %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
                   {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.non_socio %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
-                  {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.note %}
-                  <td>{{ u.note }} </td>
-                  {% else %}
-                  <td></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
                   {% endif %}
                   <td>
-                    <a href="{% url 'b_uscita_edit' u.pk %}" class="btn btn-primary p-1">Modifica</a>
-                    <a href="{% url 'b_uscita_delete' u.pk %}" class="btn btn-danger p-1">Elimina</a>
+                    <a href="{% url 'b_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                    <a href="{% url 'b_uscita_edit' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Modifica">edit</span></a>
+                    <a href="{% url 'b_uscita_delete' u.pk %}"><span class="material-symbols-outlined" style="color: red;" title="Elimina">delete</span></a>
                   </td>
                 </tr>
               {% empty %}
@@ -74,21 +61,19 @@
         </div>
       </div>
     </div>
-    <div class='row justify-content-center p-4'>
-      <div class="card">
-        <h4 class="card-header">
-          Uscite terra di oggi
-        </h4>
-        <div class='card-body'>
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Uscite terra di oggi</h1>
+        </div>
+        <div class="card-body bg-dark p-4">
           <table class="table">
             <thead>
               <tr>
                 <th class="text-center">Barca</th>
-                <th class="text-center">Persona</th>
+                <th class="text-center hidth">Persona</th>
                 <th class="text-center">Data</th>
-                <th class="text-center">Rientrato</th>
-                <th class="text-center">Non socio non accompagnato</th>
-                <th class="text-center">Note</th>
+                <th class="text-center hidth">Rientrato</th>
                 <th></th>
               </tr>
             </thead>
@@ -96,26 +81,17 @@
               {% for u in uscite_t %}
                 <tr>
                   <td class="text-center">{{ u.barca }}</td>
-                  <td class="text-center">{{ u.persona }}</td>
+                  <td class="text-center hidth">{{ u.persona }}</td>
                   <td class="text-center">{{ u.data }}</td>
                   {% if u.rientrato %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
                   {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.non_socio %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
-                  {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.note %}
-                  <td>{{ u.note }} </td>
-                  {% else %}
-                  <td></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
                   {% endif %}
                   <td>
-                    <a href="{% url 'b_uscita_edit' u.pk %}" class="btn btn-primary p-1">Modifica</a>
-                    <a href="{% url 'b_uscita_delete' u.pk %}" class="btn btn-danger p-1">Elimina</a>
+                    <a href="{% url 'b_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                    <a href="{% url 'b_uscita_edit' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Modifica">edit</span></a>
+                    <a href="{% url 'b_uscita_delete' u.pk %}"><span class="material-symbols-outlined" style="color: red;" title="Elimina">delete</span></a>
                   </td>
                 </tr>
               {% empty %}
@@ -128,22 +104,20 @@
         </div>
       </div>
     </div>
-    <div class='row justify-content-center p-4'>
-      <div class="card">
-        <h4 class="card-header">
-          Archivio Uscite
-        </h4>
-        <div class='card-body'>
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Archivio Uscite</h1>
+        </div>
+        <div class="card-body bg-dark p-4">
           <table class="table">
             <thead>
               <tr>
                 <th class="text-center">Barca</th>
-                <th class="text-center">Persona</th>
+                <th class="text-center hidth">Persona</th>
                 <th class="text-center">Data</th>
-                <th class="text-center">Terra/Mare</th>
-                <th class="text-center">Rientrato</th>
-                <th class="text-center">Non socio non accompagnato</th>
-                <th class="text-center">Note</th>
+                <th class="text-center hidth">Terra/Mare</th>
+                <th class="text-center hidth">Rientrato</th>
                 <th></th>
               </tr>
             </thead>
@@ -151,27 +125,23 @@
               {% for u in uscite_a %}
                 <tr>
                   <td class="text-center">{{ u.barca }}</td>
-                  <td class="text-center">{{ u.persona }}</td>
+                  <td class="text-center hidth">{{ u.persona }}</td>
                   <td class="text-center">{{ u.data }}</td>
-                  <td class="text-center">{{ u.tm }}</td>
+                  
+                  {% if u.tm == 'mare' %}
+                  <td class="text-center hidth"><i class="fa-solid fa-water" style="color: #005eff;"></i></td>
+                  {% else %}
+                  <td class="text-center hidth"><i class="fa-solid fa-mound" style="color: #7b4e0f;"></i></td>
+                  {% endif %}
                   {% if u.rientrato %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
                   {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.non_socio %}
-                  <td class="text-center"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
-                  {% else %}
-                  <td class="text-center"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
-                  {% endif %}
-                  {% if u.note %}
-                  <td>{{ u.note }} </td>
-                  {% else %}
-                  <td></td>
+                  <td class="text-center hidth"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
                   {% endif %}
                   <td>
-                    <a href="{% url 'b_uscita_edit' u.pk %}" class="btn btn-primary p-1">Modifica</a>
-                    <a href="{% url 'b_uscita_delete' u.pk %}" class="btn btn-danger p-1">Elimina</a>
+                    <a href="{% url 'b_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                    <a href="{% url 'b_uscita_edit' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Modifica">edit</span></a>
+                    <a href="{% url 'b_uscita_delete' u.pk %}"><span class="material-symbols-outlined" style="color: red;" title="Elimina">delete</span></a>
                   </td>
                 </tr>
               {% empty %}

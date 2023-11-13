@@ -7,7 +7,7 @@ from .models import Barca, Proprietario, Uscita
 from .forms import UscitaForm
 
 def is_istruttore(user):
-    return user.groups.filter(name='Istruttore').exists()
+    return user.groups.filter(name='Istruttore').exists() or user.groups.filter(name='DS').exists()
 
 @login_required
 def b_index(request):
@@ -67,3 +67,9 @@ def uscita_delete(request, pk):
             return redirect('b_index')
         else:
             return render(request, 'uscita_delete.html', {'u':uscita})
+        
+@login_required
+def uscita_view(request, pk):
+    uscita = get_object_or_404(Uscita, pk=pk)
+    form = UscitaForm(uscita.tm, instance=uscita)
+    return render(request, 'uscita_view.html', {'form': form})

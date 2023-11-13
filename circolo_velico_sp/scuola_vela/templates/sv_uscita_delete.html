@@ -1,32 +1,56 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-  <h2>Elimina Uscita</h2>
-  <p>Sei sicuro di voler eliminare questa uscita?</p>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Istruttore</th>
-        <th>Gommone</th>
-        <th>Data</th>
-        <th>Uscita</th>
-        <th>Entrata</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>{{ uscita.istruttore }}</td>
-          <td>{{ uscita.gommone }}</td>
-          <td>{{ uscita.data }}</td>
-          <td>{{ uscita.orario_uscita }}</td>
-          <td>{{ uscita.orario_entrata }}</td>
-        </tr>
-    </tbody>
-  </table>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Elimina</button>
-    <a href="{% url 'sv_index' %}" class="btn btn-secondary">Annulla</a>
-  </form>
+  <div class="col">
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white">
+          <div class="row align-items-center">
+              <div class="col-3 text-left" style="hight: min-content;">
+                  <a href="{% url 'sv_index' %}">
+                      <span class="material-symbols-outlined" style="color: white;" title="Visualizza">arrow_back</span>
+                  </a>
+              </div>
+              <div class="col-6 text-center">
+                  <h1 class="d-inline-block">Elimina Uscita {% if data %} del {{data}} {% endif %}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body bg-dark p-4">
+          <p>Sei sicuro di voler eliminare questa uscita?</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Istruttore</th>
+                <th>Gommone</th>
+                <th>Data</th>
+                <th class="hidth">Uscita</th>
+                <th class="hidth">Entrata</th>
+                <th class="hidth">Optimist/Laser</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>{{ uscita.istruttore }}</td>
+                  <td>{{ uscita.gommone }}</td>
+                  <td>{{ uscita.data }}</td>
+                  <td class="hidth">{{ uscita.ora_uscita }}</td>
+                  <td class="hidth">{{ uscita.ora_rientro }}</td>
+                  <td class="hidth">{{ uscita.ol }}</td>
+                </tr>
+            </tbody>
+          </table>
+          <form method="post">
+            {% csrf_token %}
+            <div class="row pt-4 ms-1 me-1 justify-content-center">
+              <button type="submit" class="btn btn-danger">Elimina</button>
+              <a href="{% url 'sv_index' %}" class="btn btn-secondary mt-3">Annulla</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

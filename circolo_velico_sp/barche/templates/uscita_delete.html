@@ -1,48 +1,69 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-  <h2>Elimina Uscita</h2>
-  <p>Sei sicuro di voler eliminare questa uscita?</p>
-  <table class="table">
-    <thead>
-      <tr>
-        <tr>
-          <th>Barca</th>
-          <th>Persona</th>
-          <th>Data</th>
-          <th>Rientrato</th>
-          <th>Non socio non accompagnato</th>
-          <th>Note</th>
-        </tr>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="text-center">{{ u.barca }}</td>
-          <td class="text-center">{{ u.persona }}</td>
-          <td class="text-center">{{ u.data }}</td>
-          {% if u.rientrato %}
-          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
-          {% else %}
-          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
-          {% endif %}
-          {% if u.non_socio %}
-          <td class="text-center"><i class="fa-solid fa-check" style="color: #000000;"></i></td>
-          {% else %}
-          <td class="text-center"><i class="fa-solid fa-xmark" style="color: #000000;"></i></td>
-          {% endif %}
-          {% if u.note %}
-          <td>{{ u.note }} </td>
-          {% else %}
-          <td></td>
-          {% endif %}
-        </tr>
-    </tbody>
-  </table>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Elimina</button>
-    <a href="{% url 'b_index' %}" class="btn btn-secondary">Annulla</a>
-  </form>
+<div class="col">
+  <div class="row mb-5 justify-content-center">
+    <div class="card p-0">
+      <div class="index-title card-header bg-dark-subtle text-white">
+        <div class="row align-items-center">
+            <div class="col-3 text-left" style="hight: min-content;">
+                <a href="{% url 'b_index' %}">
+                    <span class="material-symbols-outlined" style="color: white;" title="Visualizza">arrow_back</span>
+                </a>
+            </div>
+            <div class="col-6 text-center">
+                <h1 class="d-inline-block">Elimina Uscita {% if data %} del {{data}} {% endif %}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-dark p-4">
+        <p>Sei sicuro di voler eliminare questa uscita?</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Barca</th>
+              <th class="text-center hidth">Persona</th>
+              <th class="text-center">Data</th>
+              <th class="text-center hidth">Terra/Mare</th>
+              <th class="text-center hidth">Rientrato</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="text-center">{{ u.barca }}</td>
+                <td class="text-center hidth">{{ u.persona }}</td>
+                <td class="text-center">{{ u.data }}</td>
+                
+                {% if u.tm == 'mare' %}
+                <td class="text-center hidth"><i class="fa-solid fa-water" style="color: #005eff;"></i></td>
+                {% else %}
+                <td class="text-center hidth"><i class="fa-solid fa-mound" style="color: #7b4e0f;"></i></td>
+                {% endif %}
+                {% if u.rientrato %}
+                <td class="text-center hidth"><i class="fa-solid fa-check" style="color: #00FF00;"></i></td>
+                {% else %}
+                <td class="text-center hidth"><i class="fa-solid fa-xmark" style="color: #FF0000;"></i></td>
+                {% endif %}
+                <td>
+                  <a href="{% url 'b_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                  <a href="{% url 'b_uscita_edit' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Modifica">edit</span></a>
+                  <a href="{% url 'b_uscita_delete' u.pk %}"><span class="material-symbols-outlined" style="color: red;" title="Elimina">delete</span></a>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row pt-4 ms-1 me-1 justify-content-center">
+            <button type="submit" class="btn btn-danger">Elimina</button>
+            <a href="{% url 'b_index' %}" class="btn btn-secondary mt-3">Annulla</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -13,21 +13,17 @@
                 </a>
             </div>
             <div class="col-6 text-center">
-                <h1 class="d-inline-block">Nuova Uscita {% if data %} del {{data}} {% endif %}</h1>
+                <h1 class="d-inline-block">Visualizza Uscita</h1>
             </div>
           </div>
         </div>
-      </div>
+      </div>    
       <div class="card-body bg-dark p-4">
-        <form class="col" method="post">
-          {% csrf_token %}
-          <div class="row">
-          {% bootstrap_form form %}
-          </div>
-          <div class="row pt-4 ms-1 me-1 justify-content-center">
-            <button type="submit" class="btn btn-success">Salva</button>
-            <a href="{% url 'b_index' %}" class="btn btn-secondary mt-3">Annulla</a>
-          </div>
+        <form>
+          <fieldset disabled>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+          </fieldset>
         </form>
       </div>
     </div>

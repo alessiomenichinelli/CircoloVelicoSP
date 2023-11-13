@@ -1,56 +1,56 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5 %}
 {% block content %}
 {% csrf_token %}
-  <h1>Scuola di vela</h1>
-  <div class='col'>
-    <div class='row justify-content-center p-4'>
-      <div class='card'>
-        <h6 class ='card-header'>
-          Aggiungi uscita:
-        </h6>
-        <div class='card-body'>
-          <div class='row align-items-center justify-content-center'>
-            <div class ='p-3'>
-              <a href="{% url 'sv_uscita_new' 'optimist' %}" class="btn btn-info">Optimist</a>
-            </div>
-            <div class ='p-3'>
+  <div class="col">
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0"  style="width: 400px;">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Aggiungi Uscita</h1>
+        </div>
+        <div class="card-body bg-dark">
+          <div class="row align-items-center justify-content-center">
+            <div class ="p-3" style="width: fit-content;">
+              <a href="{% url 'sv_uscita_new' 'optimist' %}" class="btn btn-info me-4">Optimist</a>
               <a href="{% url 'sv_uscita_new' 'laser' %}" class="btn btn-success">Laser</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class='row justify-content-center p-4'>
-      <div class="card">
-        <h4 class="card-header">
-          Uscite modificabili
-        </h4>
-        <div class='card-body'>
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Uscite Modificabili</h1>
+        </div>
+        <div class="card-body bg-dark p-4">
           <table class="table">
             <thead>
               <tr>
+                {% if not uscite_archivio %}
                 <th>Istruttore</th>
-                <th>Gommone</th>
+                {% endif %}
                 <th>Data</th>
-                <th>Uscita</th>
-                <th>Entrata</th>
-                <th>Optimist/Laser</th>
+                <th class="hidth">Uscita</th>
+                <th class="hidth">Entrata</th>
+                <th class="hidth">Optimist/Laser</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {% for u in uscite %}
                 <tr>
+                  {% if not uscite_archivio %}
                   <td>{{ u.istruttore }}</td>
-                  <td>{{ u.gommone }}</td>
+                  {% endif %}
                   <td>{{ u.data }}</td>
-                  <td>{{ u.ora_uscita }}</td>
-                  <td>{{ u.ora_rientro }}</td>
-                  <td>{{ u.ol }}</td>
+                  <td class="hidth">{{ u.ora_uscita }}</td>
+                  <td class="hidth">{{ u.ora_rientro }}</td>
+                  <td class="hidth">{{ u.ol }}</td>
                   <td>
-                    <a href="{% url 'sv_uscita_edit' u.pk %}" class="btn btn-primary">Modifica</a>
-                    <a href="{% url 'sv_uscita_delete' u.pk %}" class="btn btn-danger">Elimina</a>
+                    <a href="{% url 'sv_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                    <a href="{% url 'sv_uscita_edit' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Modifica">edit</span></a>
+                    <a href="{% url 'sv_uscita_delete' u.pk %}"><span class="material-symbols-outlined" style="color: red;" title="Elimina">delete</span></a>
                   </td>
                 </tr>
               {% empty %}
@@ -63,5 +63,44 @@
         </div>
       </div>
     </div>
+    {% if uscite_archivio %}
+    <div class="row mb-5 justify-content-center">
+      <div class="card p-0">
+        <div class="index-title card-header bg-dark-subtle text-white text-center">
+          <h1>Uscite Archivio</h1>
+        </div>
+        <div class="card-body bg-dark p-4">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th class="hidth">Uscita</th>
+                <th class="hidth">Entrata</th>
+                <th class="hidth">Optimist/Laser</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in uscite_archivio %}
+                <tr>
+                  <td>{{ u.data }}</td>
+                  <td class="hidth">{{ u.ora_uscita }}</td>
+                  <td class="hidth">{{ u.ora_rientro }}</td>
+                  <td class="hidth">{{ u.ol }}</td>
+                  <td>
+                    <a href="{% url 'sv_uscita_view' u.pk %}"><span class="material-symbols-outlined" style="color: secondary;" title="Visualizza">open_in_new</span></a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="6">Nessuna uscita trovata.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 {% endblock %}

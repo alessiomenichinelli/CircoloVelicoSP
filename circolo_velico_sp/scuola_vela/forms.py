@@ -3,6 +3,7 @@ from .models import Istruttore, Gommone, Allievo, Uscita
 
 class UscitaIstruttoreForm(forms.ModelForm):
     allievi = forms.ModelMultipleChoiceField(queryset=Allievo.objects.none(), widget=forms.CheckboxSelectMultiple())
+    """
     data = forms.DateField(
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
@@ -13,6 +14,7 @@ class UscitaIstruttoreForm(forms.ModelForm):
             }
         ),
     )
+    """
     ora_rientro = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
     ora_uscita = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))  # Usa il widget di tipo ora
 
@@ -26,7 +28,7 @@ class UscitaIstruttoreForm(forms.ModelForm):
 
     class Meta:
         model = Uscita
-        fields = ('gommone', 'allievi', 'data', 'ora_uscita', 'ora_rientro')
+        fields = ('gommone', 'allievi', 'ora_uscita', 'ora_rientro')
 
     def __init__(self, user, ol,*args, **kwargs):
         super().__init__(*args, **kwargs)
