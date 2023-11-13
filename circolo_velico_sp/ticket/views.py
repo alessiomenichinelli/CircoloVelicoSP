@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Ticket
 from .forms import NewTicketForm, EditTicketForm
 
+import telebot
+API_TOKEN = '6803811858:AAFuMHkhFWCAqP5y3mJOb1tj_bQvB3y4K0Y'
+
 def is_istruttore(user):
     return user.groups.filter(name='Istruttore').exists()
 
@@ -33,6 +36,7 @@ def ticket_new(request):
     if not is_istruttore(request.user) and not is_nostromo(request.user):
         raise Http404
     else:
+        bot = telebot.TeleBot(API_TOKEN)
         if request.method == "POST":
             form = NewTicketForm(request.POST)
             if form.is_valid():
@@ -41,6 +45,7 @@ def ticket_new(request):
                 ticket.stato = 'Inviato'
                 ticket.save()
                 form.save_m2m()
+                bot.send_message(chat_id=173537401, text=f'Nuovo ticket da {ticket.user.username}:\n{ticket.testo}')
                 return redirect('ticket_list')
         else:
             form = NewTicketForm()
